@@ -5,6 +5,7 @@ using NLayer.Core;
 namespace NLayer.Repository.Configurations
 {
     public class CategoryConfiguration : Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Category>
+    {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.HasKey(x => x.Id);
