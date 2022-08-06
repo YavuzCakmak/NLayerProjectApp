@@ -25,6 +25,8 @@ namespace NLayer.API.Controllers
             var productsDtos = _mapper.Map<List<ProductDto>>(products).ToList();
             return CreateActionResult(CustomResponseDto<List<ProductDto>>.Success(200, productsDtos));
         }
+
+        [ServiceFilter(typeof(NotFoundFilter<Product>))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -45,6 +47,8 @@ namespace NLayer.API.Controllers
             await _service.UpdateAsync(_mapper.Map<Product>(productDto));
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
+
+        [ServiceFilter(typeof(NotFoundFilter<Product>))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
