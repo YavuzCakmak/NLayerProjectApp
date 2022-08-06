@@ -5,6 +5,7 @@ using NLayer.API.Filters;
 using NLayer.Core;
 using NLayer.Core.Dtos;
 using NLayer.Core.Services;
+using System.Net;
 
 namespace NLayer.API.Controllers
 {
@@ -23,7 +24,7 @@ namespace NLayer.API.Controllers
         {
             var products = await _service.GetAllAsync();
             var productsDtos = _mapper.Map<List<ProductDto>>(products).ToList();
-            return CreateActionResult(CustomResponseDto<List<ProductDto>>.Success(200, productsDtos));
+            return CreateActionResult(CustomResponseDto<List<ProductDto>>.Success((int)HttpStatusCode.OK, productsDtos));
         }
 
         [ServiceFilter(typeof(NotFoundFilter<Product>))]
@@ -32,8 +33,9 @@ namespace NLayer.API.Controllers
         {
             var product = await _service.GetByIdAsync(id);
             var productDto = _mapper.Map<ProductDto>(product);
-            return CreateActionResult(CustomResponseDto<ProductDto>.Success(200, productDto));
+            return CreateActionResult(CustomResponseDto<ProductDto>.Success((int)HttpStatusCode.OK, productDto));
         }
+
         [HttpPost]
         public async Task<IActionResult> Save(ProductDto productDto)
         {

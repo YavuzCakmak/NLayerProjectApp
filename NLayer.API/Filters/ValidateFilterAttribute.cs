@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NLayer.Core.Dtos;
+using System.Net;
 
 namespace NLayer.API.Filters
 {
@@ -13,7 +14,7 @@ namespace NLayer.API.Filters
             {
                 var errors = context.ModelState.Values.SelectMany(x => x.Errors).Select(x=> x.ErrorMessage).ToList();
 
-                context.Result = new BadRequestObjectResult(CustomResponseDto<NoContentDto>.Fail(errors,400));
+                context.Result = new BadRequestObjectResult(CustomResponseDto<NoContentDto>.Fail(errors,(int)HttpStatusCode.BadRequest));
             }
         }
     }
