@@ -22,10 +22,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+//Default
 builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilterAttribute())).AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<ProductDtoValidator>());
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
-
     options.SuppressModelStateInvalidFilter = true;
 });
 
@@ -33,6 +33,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+//Default
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
@@ -44,6 +45,7 @@ builder.Services.AddDbContext<AppDbContext>(
                 .EnableSensitiveDataLogging()
                 .EnableDetailedErrors());
 
+//Default
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containersBuilder => containersBuilder.RegisterModule(new RepoServiceModule()));
 
@@ -55,7 +57,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCustomException();
+
+// Default
+app.UseCustomException(); 
 
 app.UseAuthorization();
 app.MapControllers();
