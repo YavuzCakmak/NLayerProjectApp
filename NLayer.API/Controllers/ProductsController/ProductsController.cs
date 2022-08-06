@@ -19,6 +19,7 @@ namespace NLayer.API.Controllers
             _mapper = mapper;
             _service = productService;
         }
+
         [HttpGet]
         public async Task<IActionResult> All()
         {
@@ -60,7 +61,7 @@ namespace NLayer.API.Controllers
 
         }
 
-        // GET  api/products/GetProductsWithCategory
+        // api/products/GetProductsWithCategory
         [HttpGet("[action]")]
         public async Task<IActionResult> GetProductsWithCategory()
         {
