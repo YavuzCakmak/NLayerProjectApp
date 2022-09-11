@@ -40,6 +40,11 @@ namespace NLayer.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(ProductDto productDto)
         {
+            if (productDto == null)
+            {
+                return CreateActionResult(CustomResponseDto<ProductDto>.Fail("Empty",(int)HttpStatusCode.BadRequest));
+
+            }
             var product = await _service.AddAsync(_mapper.Map<Product>(productDto));
             var productsDto = _mapper.Map<ProductDto>(product);
             return CreateActionResult(CustomResponseDto<ProductDto>.Success(201, productsDto));
@@ -55,6 +60,10 @@ namespace NLayer.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
+            if (id == 0)
+            {
+                return CreateActionResult(CustomResponseDto<NoContentDto>.Fail("Is Empty",(int)HttpStatusCode.BadRequest));
+            }
             var product = await _service.GetByIdAsync(id);
             await _service.RemoveAsync(product);
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
